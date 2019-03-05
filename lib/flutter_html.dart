@@ -37,32 +37,36 @@ class Html extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double width = MediaQuery.of(context).size.width;
+    return LayoutBuilder(
+      builder: (_, constraints) {
+        final width = constraints.biggest.width;
 
-    return Container(
-      padding: padding,
-      color: backgroundColor,
-      width: width,
-      child: DefaultTextStyle.merge(
-        style: defaultTextStyle ?? DefaultTextStyle.of(context).style,
-        child: (useRichText)
-            ? HtmlRichTextParser(
-                width: width,
-                onLinkTap: onLinkTap,
-                renderNewlines: renderNewlines,
-                html: data,
-                linkStyle: linkStyle,
-              )
-            : HtmlOldParser(
-                width: width,
-                onLinkTap: onLinkTap,
-                renderNewlines: renderNewlines,
-                customRender: customRender,
-                html: data,
-                blockSpacing: blockSpacing,
-                linkStyle: linkStyle,
-              ),
-      ),
+        return Container(
+          padding: padding,
+          color: backgroundColor,
+          width: width,
+          child: DefaultTextStyle.merge(
+            style: defaultTextStyle ?? DefaultTextStyle.of(context).style,
+            child: (useRichText)
+                ? HtmlRichTextParser(
+                    width: width,
+                    onLinkTap: onLinkTap,
+                    renderNewlines: renderNewlines,
+                    html: data,
+                    linkStyle: linkStyle,
+                  )
+                : HtmlOldParser(
+                    width: width,
+                    onLinkTap: onLinkTap,
+                    renderNewlines: renderNewlines,
+                    customRender: customRender,
+                    html: data,
+                    blockSpacing: blockSpacing,
+                    linkStyle: linkStyle,
+                  ),
+          ),
+        );
+      },
     );
   }
 }
